@@ -1,0 +1,81 @@
+{
+    "_comment": "ADP training",
+    "model": {
+        "type_map": [
+            "O",
+            "H",
+            "C",
+            "N"
+        ],
+        "descriptor": {
+            "type": "se_e2_a",
+            "sel": "auto",
+            "rcut_smth": 5.5,
+            "rcut": 6.0,
+            "neuron": [
+                32,    
+                64,
+                128,
+                256
+            ],
+            "resnet_dt": false,
+            "axis_neuron": 16,
+            "seed": 1,
+            "_comment": "Add 40k 600K sampling"
+        },
+        "fitting_net": {
+            "neuron": [
+                256,
+                256,
+                256
+            ],
+            "resnet_dt": true,
+            "seed": 1,
+            "_comment": "Initial Setting"
+        },
+        "_comment": "adp unbiased inputs"
+    },
+    "learning_rate": {
+        "type": "exp",
+        "decay_steps": 2000,
+        "start_lr": 0.002,
+        "stop_lr": 1e-09,
+        "_comment": "Smoother lr and less lr"
+    },
+    "loss": {
+        "start_pref_e": 0,
+        "limit_pref_e": 0,
+        "start_pref_f": 100,
+        "limit_pref_f": 100,
+        "start_pref_v": 0,
+        "limit_pref_v": 0,
+        "_comment": "Larger weights for forces"
+    },
+    "training": {
+        "stop_batch": 400000,
+        "seed": 1,
+        "_comment": "ADP training",
+        "disp_file": "lcurve_adp_100ps.out",
+        "disp_freq": 100,
+        "save_freq": 1000,
+        "save_ckpt": "model_adp_100ps.ckpt",
+        "disp_training": true,
+        "time_training": true,
+        "profiling": false,
+        "profiling_file": "timeline.json",
+        "training_data": {
+            "systems": [
+                "train/002_raw"
+            ],
+            "set_prefix": "set",
+            "batch_size": "auto"
+        },
+        "validation_data": {
+            "systems": [
+                "val/002_raw"
+            ],
+            "batch_size": 1,
+            "numb_btch": 3
+        }
+    }
+}
